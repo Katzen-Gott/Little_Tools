@@ -1,0 +1,24 @@
+# autocompletion for homebrew
+source $(brew --repository)/Library/Contributions/brew_bash_completion.sh
+# colouring and hooks around ls
+alias ll="ls -laG"
+alias ls="ls -G"
+alias lsa="ls -aG"
+# restart all audio services.
+alias soundfix="sudo kill -9 `ps ax|grep 'coreaudio[a-z]' | awk '{print $1}'`"
+# call previous command with sudo (works with pipes)
+alias !='sudo "$BASH" -c "$(history -p !!)"'
+# set system to show or hide hidden files
+alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES && killall Finder /System/Library/CoreServices/Finder.app'
+alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO && killall Finder /System/Library/CoreServices/Finder.app'
+# edit aliases and functions
+alias aliases='nano ~/.bash_login'
+# mkdir recursively and cd into it
+mcd () {
+    mkdir -p $1
+    cd $1
+}
+# find process by name
+pfind () {
+    ps -ax | grep $1
+}
