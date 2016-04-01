@@ -22,3 +22,14 @@ mcd () {
 pfind () {
     ps -ax | grep $1
 }
+# restart an app by name
+restart () {
+    pkill "$@"
+    open -h -a "$@"
+}
+forceRestart () {
+    pkill -9 "$@"
+    open -h -a "$@"
+}
+# make sure window or tab is started in the home folder.
+cd
