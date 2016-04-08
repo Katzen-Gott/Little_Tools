@@ -1,18 +1,23 @@
 # autocompletion for homebrew
 source $(brew --repository)/Library/Contributions/brew_bash_completion.sh
-# colouring and hooks around ls
+# colouring and hooks around ls 
+# remove -G key for linux, as it colours ls aoutput by default
 alias ll="ls -laG"
 alias ls="ls -G"
 alias lsa="ls -aG"
 # restart all audio services.
+# sometimes mac sound becomes broken, this helps.
 alias soundfix="sudo kill -9 `ps ax|grep 'coreaudio[a-z]' | awk '{print $1}'`"
-# call previous command with sudo (works with pipes)
+# call previous command with sudo (works with pipes, etc.)
 alias !='sudo "$BASH" -c "$(history -p !!)"'
-# set system to show or hide hidden files
+# set Finder to show or hide hidden files (mac only)
 alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES && killall Finder /System/Library/CoreServices/Finder.app'
 alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO && killall Finder /System/Library/CoreServices/Finder.app'
 # edit aliases and functions
 alias aliases='nano ~/.bash_login'
+# rebuild & rerun Jbehave service tests on QA env (only works in proper directory)
+# I might make it parametrized later, but for now it's just simple alias
+alias retest="mvn clean package && java -Denv=config/env/oap/qa.properties -Denv.name=qa -Dsuite=config/suite/loyalty/lac.properties -Dclient=config/client/oap/adaptive_web.properties  -Dsuite.threadCount=2 -Dupdate.sku=true -jar target/services-tests-1.1.8-SNAPSHOT.jar && mvn site"
 # mkdir recursively and cd into it
 mcd () {
     mkdir -p $1
@@ -23,6 +28,7 @@ pfind () {
     ps -ax | grep $1
 }
 # restart an app by name
+# works for apps with space in name, e.g. 'restart Cisco\ Jabber'
 restart () {
     pkill "$@"
     open -h -a "$@"
@@ -31,5 +37,6 @@ forceRestart () {
     pkill -9 "$@"
     open -h -a "$@"
 }
-# make sure window or tab is started in the home folder.
+# make sure window or tab is started in the home folder
+# need this because Cmd+T opens tab in same place where active tab was.
 cd
