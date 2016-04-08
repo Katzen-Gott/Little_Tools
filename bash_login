@@ -18,6 +18,21 @@ alias aliases='nano ~/.bash_login'
 # rebuild & rerun Jbehave service tests on QA env (only works in proper directory)
 # I might make it parametrized later, but for now it's just simple alias
 alias retest="mvn clean package && java -Denv=config/env/oap/qa.properties -Denv.name=qa -Dsuite=config/suite/loyalty/lac.properties -Dclient=config/client/oap/adaptive_web.properties  -Dsuite.threadCount=2 -Dupdate.sku=true -jar target/services-tests-1.1.8-SNAPSHOT.jar && mvn site"
+# customizable test-runner
+retest2 () {
+    local env="oap/qa"
+    local suite="loyalty/lac"
+    local client="oap/adaptive_web"
+    local threads=4
+    local jar
+    local ${@}
+    env="-Denv=config/env/${env}.properties"
+    suite="-Dsuite=config/suite/${suite}.properties"
+    client="-Dclient=config/client/${client}.properties"
+    threads="-Dsuite.threadCount=${threads}"
+    jar="-jar target/services-tests-1.1.8-SNAPSHOT.jar"
+    mvn clean package && java ${env} ${suite} ${client} ${threads} ${jar} && mvn site
+}
 # mkdir recursively and cd into it
 mcd () {
     mkdir -p $1
