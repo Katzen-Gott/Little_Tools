@@ -16,10 +16,8 @@ alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO && killall
 # edit aliases and functions
 alias aliases='nano ~/.bash_login'
 # rebuild & rerun Jbehave service tests on QA env (only works in proper directory)
-# I might make it parametrized later, but for now it's just simple alias
-alias retest="mvn clean package && java -Denv=config/env/oap/qa.properties -Denv.name=qa -Dsuite=config/suite/loyalty/lac.properties -Dclient=config/client/oap/adaptive_web.properties  -Dsuite.threadCount=2 -Dupdate.sku=true -jar target/services-tests-1.1.8-SNAPSHOT.jar && mvn site"
-# customizable test-runner
-retest2 () {
+# customizable test-runner for jbehave (also builds allure report)
+retest () {
     local env="oap/qa"
     local suite="loyalty/lac"
     local client="oap/adaptive_web"
