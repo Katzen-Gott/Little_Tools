@@ -50,6 +50,11 @@ forceRestart () {
     pkill -9 "$@"
     open -h -a "$@"
 }
+
+# enable alt+left/right (for ubuntu, as it doesn't work by default)
+bind '"\e[1;5D" backward-word' 
+bind '"\e[1;5C" forward-word'
+
 # make sure window or tab is started in the home folder
 # need this because Cmd+T opens tab in same place where active tab was.
 cd
